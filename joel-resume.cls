@@ -1,10 +1,10 @@
-%% Start of file `awesome-cv.cls'.
+%% Start of file `joel-resume.cls'.
 % Awesome CV Class File
 %
 % This class has been downloaded from:
 % https://github.com/posquit0/Awesome-CV
 %
-% Author:
+% Original Author:
 % Claud D. Park <posquit0.bj@gmail.com>
 % http://www.posquit0.com
 %
@@ -21,7 +21,7 @@
 %-------------------------------------------------------------------------------
 %                Identification
 %-------------------------------------------------------------------------------
-\ProvidesClass{awesome-cv}[2017/02/05 v1.6.1 Awesome Curriculum Vitae Class]
+\ProvidesClass{joel-resume}[Fork of Awesome Curriculum Vitae]
 \NeedsTeXFormat{LaTeX2e}
 
 
@@ -683,6 +683,18 @@
     \ifstrempty{#5}
       {}
       {\multicolumn{2}{L{\textwidth}}{\descriptionstyle{#5}} \\}
+  \end{tabular*}%
+}
+
+% Define an entry of cv information
+% Usage: \cventry{<position>}{<title>}{<location>}{<date>}{<description>}
+\newcommand*{\cvhobby}[2]{%
+  \vspace{-2.0mm}
+  \setlength\tabcolsep{0pt}
+  \setlength{\extrarowheight}{0pt}
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{4.5cm}}
+    \entrytitlestyle{#1} \\
+    \multicolumn{2}{L{\textwidth}}{\descriptionstyle{#2}}
   \end{tabular*}%
 }
 
