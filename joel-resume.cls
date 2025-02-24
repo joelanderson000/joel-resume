@@ -148,6 +148,7 @@
 \definecolor{awesome-nephritis}{HTML}{27AE60}
 \definecolor{awesome-concrete}{HTML}{95A5A6}
 \definecolor{awesome-darknight}{HTML}{131A28}
+\definecolor{joel-blue}{HTML}{1A54C1}
 \colorlet{awesome}{awesome-red}
 
 % Boolean value to switch section color highlighting
@@ -191,6 +192,16 @@
 \newcommand*{\entrydatestyle}[1]{{\fontsize{8pt}{1em}\bodyfontlight\slshape\color{graytext} #1}}
 \newcommand*{\entrylocationstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\slshape\color{awesome} #1}}
 \newcommand*{\descriptionstyle}[1]{{\fontsize{9pt}{1em}\bodyfontlight\upshape\color{text} #1}}
+
+% For compressed elements of entry
+\newcommand*{\entrytitlestylecompressed}[1]{{\fontsize{10pt}{0em}\bodyfont\bfseries\color{darktext} #1}}
+\newcommand*{\entrypositionstylecompressed}[1]{{\fontsize{8pt}{0em}\bodyfont\scshape\color{graytext} #1}}
+\newcommand*{\entrydatestylecompressed}[1]{{\fontsize{8pt}{0em}\bodyfontlight\slshape\color{graytext} #1}}
+\newcommand*{\entrylocationstylecompressed}[1]{{\fontsize{9pt}{0em}\bodyfontlight\slshape\color{awesome} #1}}
+\newcommand*{\descriptionstylecompressed}[1]{{\fontsize{9pt}{0em}\bodyfontlight\upshape\color{text} #1}}
+
+\newcommand*{\careerbreakstyle}[1]{{\fontsize{10pt}{1em}\bodyfontlight\bfseries\color{graytext} #1}}
+\newcommand*{\careerbreaklocation}[1]{{\fontsize{9pt}{0em}\bodyfontlight\slshape\color{graytext} #1}}
 
 % For elements of subentry
 \newcommand*{\subentrytitlestyle}[1]{{\fontsize{8pt}{1em}\bodyfont\mdseries\color{graytext} #1}}
@@ -422,8 +433,11 @@
 \newcommand{\acvHeaderAfterQuoteSkip}{5mm}
 
 % Others
+\newcommand{\acvSectionCompress}{0.5mm}
+\newcommand{\acvSectionTopSkipReduced}{1mm}
 \newcommand{\acvSectionTopSkip}{3mm}
 \newcommand{\acvSectionContentTopSkip}{2.5mm}
+\newcommand{\acvSectionContentCompress}{0.5mm}
 
 
 %-------------------------------------------------------------------------------
@@ -643,6 +657,14 @@
   \color{sectiondivider}\vhrulefill{0.9pt}
 }
 
+\newcommand{\cvsectioncompressed}[1]{%
+  % \vspace{\acvSectionTopSkipReduced}
+  \vspace{-3.0mm}
+  \sectionstyle{#1}
+  \phantomsection
+  \color{sectiondivider}\vhrulefill{0.9pt}
+}
+
 % Define a subsection for CV
 % Usage: \cvsubsection{<subsection-title>}
 \newcommand{\cvsubsection}[1]{%
@@ -684,6 +706,31 @@
       {}
       {\multicolumn{2}{L{\textwidth}}{\descriptionstyle{#5}} \\}
   \end{tabular*}%
+}
+
+% Define a section for CV
+% Usage: \cvsection{<section-title>}
+\newcommand{\cvcareerbreak}[4]{%
+%\vspace{-1.0mm}
+\setlength\tabcolsep{0pt}
+\setlength{\extrarowheight}{0pt}
+% \begin {tabular*}{\textwidth}{@{\extracolsep{\fill}} C{\textwidth}}
+% \begin{center}
+%   \color{lighttext}\vhrulefill{0.6pt} \\
+% \end{center}
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} L{\textwidth - 4.5cm} R{3.5cm}}
+      %\color{lighttext}\vhrulefill{0.6pt} \\
+      %\hline
+      \careerbreakstyle{#2} & \careerbreaklocation{#3} \\
+      \entrypositionstyle{#1} & \entrydatestyle{#4} \\
+      %\hline
+      %\color{lighttext}\vhrulefill{0.6pt}
+  \end{tabular*}%
+  \vspace{1.0mm}
+%   \begin{center}
+%   \color{lighttext}\vhrulefill{0.6pt} \\
+% % \end{tabular*}
+% \end{center}
 }
 
 % Define an entry of cv information
@@ -758,6 +805,20 @@
 	\skilltypestyle{#1} & \skillsetstyle{#2} \\
 }
 
+% Define an environment for top skills
+\newenvironment{cvtopskills}{%
+  \vspace{\acvSectionContentTopSkip}
+  \vspace{-2.0mm}
+  \begin{center}
+    \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} C{\textwidth}}
+}{%
+    \end{tabular*}
+  \end{center}
+}
+
+\newcommand*{\cvkeyskills}{
+  \skilltypestyle
+}
 % Define an environment for cvitems(for cventry)
 \newenvironment{cvitems}{%
   \vspace{-4.0mm}
